@@ -22,19 +22,24 @@ void blink(int times, int length, int interval) {
 }
 
 void setup() {
+    delay(5 * 1000);
     Serial.begin(9600);
+
+    // Needed for blink
     pinMode(0, OUTPUT);
 
     blink(10, 100, 100);
-    delay(10000);
-    blink(5, 800, 100);
+    Serial.println();
+    Serial.println();
+    Serial.println();
+    Serial.println("===== Restart ======");
+    Serial.println();
 
-    // We start by connecting to a WiFi network
     connectToSSID(ssid, password);
 }
 
 void loop() {
-    delay(10000);
+    Serial.println();
     blink(2, 500, 500);
 
     // Use WiFiClient class to create TCP connections
@@ -53,4 +58,5 @@ void loop() {
     postSensorData();
 
     Serial.println();
+    delay(30 * 1000);
 }
