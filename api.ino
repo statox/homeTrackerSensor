@@ -1,10 +1,9 @@
-int getRemoteTime() {
+double getRemoteTime() {
     String path = "/health/getRemoteTime";
     String url = "http://" + String(host) + path;
 
-    String remoteTimeResponse = httpGETRequest(url);
-    JSONVar parsedRemoteTimeResponse = JSON.parse(remoteTimeResponse);
-    int remoteTime = parsedRemoteTimeResponse["time"];
+    JsonDocument remoteTimeResponse = httpGETRequest(url);
+    double remoteTime = remoteTimeResponse["time"];
 
     return remoteTime;
 }

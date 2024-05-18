@@ -1,28 +1,36 @@
 // Expecting complete URL http://host/path
-String httpGETRequest(String url) {
+JsonDocument httpGETRequest(String url) {
     Serial.println("GET " + url);
 
     WiFiClient client;
     HTTPClient http;
 
-    // Your IP address with path or Domain name with URL path 
     http.begin(client, url);
 
-    // Send HTTP POST request
     int httpResponseCode = http.GET();
+    JsonDocument response;
 
-    String payload = "{}"; 
-
-    if (httpResponseCode>0) {
-        payload = http.getString();
-    } else {
+    if (httpResponseCode<=0) {
         Serial.print("Error code: ");
         Serial.println(httpResponseCode);
-    }
-    // Free resources
-    http.end();
 
-    return payload;
+        http.end();
+        return response;
+    }
+
+    DeserializationError error = deserializeJson(response, http.getString());
+
+    // Test if parsing succeeds.
+    if (error) {
+        Serial.print("deserializeJson() failed: ");
+        Serial.println(error.f_str());
+
+        http.end();
+        return response;
+    }
+
+    http.end();
+    return response;
 }
 
 void httpPOSTRequest(String url, JsonDocument payload) {
@@ -35,7 +43,6 @@ void httpPOSTRequest(String url, JsonDocument payload) {
     WiFiClient client;
     HTTPClient http;
 
-    // Your IP address with path or Domain name with URL path
     http.begin(client, url);
 
     http.addHeader("Content-Type", "application/json");

@@ -45,8 +45,9 @@ void loop() {
         return;
     }
 
-    int remoteTime = getRemoteTime();
-    Serial.println("Remote time");
+    double remoteTime = getRemoteTime();
+
+    Serial.print("Remote time: ");
     Serial.println(remoteTime);
 
     postSensorData();
