@@ -8,6 +8,8 @@ const char* password = "CHANGEME";
 
 const char* host = "api.statox.fr";
 
+const char* sensorName = "dev-sensor";
+
 void blink(int times, int length, int interval) {
     Serial.print("Blink");
 
@@ -51,11 +53,7 @@ void loop() {
     }
 
     double remoteTime = getRemoteTime();
-
-    Serial.print("Remote time: ");
-    Serial.println(remoteTime);
-
-    postSensorData();
+    postSensorData(sensorName, remoteTime, 20.5);
 
     Serial.println();
     delay(30 * 1000);

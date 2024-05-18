@@ -8,12 +8,14 @@ double getRemoteTime() {
     return remoteTime;
 }
 
-void postSensorData() {
+void postSensorData(String sensorName, double ts, float tempCelsius) {
     String path = "/homeTracker/upload";
     String url = "http://" + String(host) + path;
 
     JsonDocument doc;
-    doc["value"] = millis();
+    doc["sensorName"] = sensorName;
+    doc["ts"] = ts;
+    doc["tempCelsius"] = tempCelsius;
 
     httpPOSTRequest(url, doc);
 }
