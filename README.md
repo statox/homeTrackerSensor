@@ -3,4 +3,5 @@
 
 # Libraries
 
-- https://github.com/arduino-libraries/Arduino_JSON
+- https://github.com/arduino-libraries/Arduino_JSON (Used in httpGETRequest)
+- https://arduinojson.org (Used in httpPOSTRequest)

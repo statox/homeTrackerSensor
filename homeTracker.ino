@@ -1,6 +1,7 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <Arduino_JSON.h>
+#include <ArduinoJson.h>
 
 const char* ssid     = "CHANGEME";
 const char* password = "CHANGEME";
