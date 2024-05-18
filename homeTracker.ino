@@ -24,17 +24,6 @@ void blink(int times, int length, int interval) {
   Serial.println();
 }
 
-int getRemoteTime(WiFiClient& client) {
-    String path = "/health/getRemoteTime";
-    String url = "http://" + String(host) + path;
-
-    String remoteTimeResponse = httpGETRequest(url);
-    JSONVar parsedRemoteTimeResponse = JSON.parse(remoteTimeResponse);
-    int remoteTime = parsedRemoteTimeResponse["time"];
-
-    return remoteTime;
-}
-
 void setup() {
   Serial.begin(9600);
   pinMode(0, OUTPUT);
@@ -59,9 +48,11 @@ void loop() {
         return;
     }
 
-    int remoteTime = getRemoteTime(client);
+    int remoteTime = getRemoteTime();
     Serial.println("Remote time");
     Serial.println(remoteTime);
+
+    postSensorData();
 
     Serial.println();
 }
