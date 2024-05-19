@@ -8,7 +8,13 @@ double getRemoteTime() {
     return remoteTime;
 }
 
-void postSensorData(String sensorName, double ts, float tempCelsius) {
+void postSensorData(
+    String sensorName,
+    double ts,
+    float tempCelsius,
+    float tempCelsius2,
+    float humidity
+) {
     String path = "/homeTracker/upload";
     String url = "http://" + String(host) + path;
 
@@ -16,6 +22,8 @@ void postSensorData(String sensorName, double ts, float tempCelsius) {
     doc["sensorName"] = sensorName;
     doc["ts"] = ts;
     doc["tempCelsius"] = tempCelsius;
+    doc["tempCelsius2"] = tempCelsius2;
+    doc["humidity"] = humidity;
 
     httpPOSTRequest(url, doc);
 }
