@@ -52,9 +52,10 @@ void loop() {
         return;
     }
 
+    const double celsius = readTempCelsius();
     double remoteTime = getRemoteTime();
-    postSensorData(sensorName, remoteTime, 20.5);
+    postSensorData(sensorName, remoteTime, celsius);
 
     Serial.println();
-    delay(30 * 1000);
+    delay(2 * 60 * 1000);
 }
