@@ -53,11 +53,20 @@ void loop() {
         return;
     }
 
+    int* batteryData = readBatteryLevel();
+    int batteryReading = batteryData[0];
+    int batteryPercent = batteryData[1];
+    Serial.print("Battery: ");
+    Serial.print(batteryPercent);
+    Serial.print("% - ");
+    Serial.print(batteryReading);
+    Serial.println("%");
+
     float* dhtReadings = readDHT();
     float dhtCelsius = dhtReadings[0];
     float dhtHumidity = dhtReadings[1];
 
-    Serial.print("Temp: ");
+    Serial.print("Temperature: ");
     Serial.print(dhtCelsius);
     Serial.print("(C)  Hum: ");
     Serial.print(dhtHumidity);
@@ -67,7 +76,7 @@ void loop() {
     Serial.print("Remote time: ");
     Serial.println(remoteTime);
 
-    postSensorData(sensorName, remoteTime, dhtCelsius, dhtHumidity);
+    postSensorData(sensorName, remoteTime, dhtCelsius, dhtHumidity, batteryReading, batteryPercent);
 
     Serial.println();
     delay(loopDelay);

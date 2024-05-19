@@ -12,7 +12,9 @@ void postSensorData(
     String sensorName,
     double ts,
     float tempCelsius,
-    float humidity
+    float humidity,
+    int batteryReading,
+    int batteryPercent
 ) {
     String path = "/homeTracker/upload";
     String url = "http://" + String(host) + path;
@@ -22,6 +24,8 @@ void postSensorData(
     doc["ts"] = ts;
     doc["tempCelsius"] = tempCelsius;
     doc["humidity"] = humidity;
+    doc["batteryReading"] = batteryReading;
+    doc["batteryPercent"] = batteryPercent;
 
     httpPOSTRequest(url, doc);
 }
