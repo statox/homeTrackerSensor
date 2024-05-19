@@ -53,23 +53,21 @@ void loop() {
         return;
     }
 
-    const double vmaCelsius = readTempCelsius();
     float* dhtReadings = readDHT();
     float dhtCelsius = dhtReadings[0];
     float dhtHumidity = dhtReadings[1];
 
-    Serial.print("VMA320: ");
-    Serial.print(vmaCelsius);
-    Serial.print("(C) DHT: ");
+    Serial.print("Temp: ");
     Serial.print(dhtCelsius);
     Serial.print("(C)  Hum: ");
-    Serial.println(dhtHumidity);
+    Serial.print(dhtHumidity);
+    Serial.println("%");
 
     double remoteTime = getRemoteTime();
     Serial.print("Remote time: ");
     Serial.println(remoteTime);
 
-    postSensorData(sensorName, remoteTime, vmaCelsius, dhtCelsius, dhtHumidity);
+    postSensorData(sensorName, remoteTime, dhtCelsius, dhtHumidity);
 
     Serial.println();
     delay(loopDelay);
