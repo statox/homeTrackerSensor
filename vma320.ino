@@ -1,7 +1,7 @@
 #include <math.h>
 
 /*
- * Code for the VMA320 temperatur sensor
+ * Code for the VMA320 temperature sensor
  * https://www.velleman.eu/products/view/?country=be&lang=fr&id=435554
  *
  * This sensor uses the only analogue PIN of the ESP8266

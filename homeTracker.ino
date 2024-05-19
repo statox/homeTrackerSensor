@@ -1,6 +1,5 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
-#include <Arduino_JSON.h>
 #include <ArduinoJson.h>
 
 const char* ssid     = "CHANGEME";
@@ -37,13 +36,15 @@ void setup() {
     Serial.println("===== Restart ======");
     Serial.println();
 
-    connectToSSID(ssid, password);
+    // connectToSSID(ssid, password);
+    initDHT();
 }
 
 void loop() {
     Serial.println();
     blink(2, 500, 500);
 
+    /*
     // Use WiFiClient class to create TCP connections
     WiFiClient client;
     const int httpPort = 80;
@@ -52,10 +53,23 @@ void loop() {
         return;
     }
 
-    const double celsius = readTempCelsius();
     double remoteTime = getRemoteTime();
     postSensorData(sensorName, remoteTime, celsius);
+    */
+
+    const double vmaCelsius = readTempCelsius();
+
+    float* dhtReadings = readDHT();
+    float dhtCelsius = dhtReadings[0];
+    float dhtHumidity = dhtReadings[1];
+
+    Serial.print("VMA320: ");
+    Serial.print(vmaCelsius);
+    Serial.print("(C) DHT: ");
+    Serial.print(dhtCelsius);
+    Serial.print("(C)  Hum: ");
+    Serial.println(dhtHumidity);
 
     Serial.println();
-    delay(2 * 60 * 1000);
+    delay(5 * 1000);
 }
