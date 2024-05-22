@@ -22,9 +22,20 @@ void blink(int times, int length, int interval) {
     Serial.println();
 }
 
+
+const unsigned long oneMinute = 60e6;
+const unsigned long loopDelay = 10 * oneMinute;
+// const unsigned long loopDelay = 10e6;
+
+void sleep () {
+    Serial.println();
+    Serial.println("Going to sleep");
+    ESP.deepSleep(loopDelay);
+}
+
 void setup() {
-    delay(5 * 1000);
     Serial.begin(9600);
+    while(!Serial) { }
 
     // Needed for blink
     pinMode(0, OUTPUT);
@@ -38,10 +49,7 @@ void setup() {
 
     connectToSSID(ssid, password);
     initDHT();
-}
 
-const unsigned long loopDelay = 10 * 60 * 1000;
-void loop() {
     Serial.println();
     blink(2, 500, 500);
 
@@ -50,6 +58,7 @@ void loop() {
     const int httpPort = 80;
     if (!client.connect(host, httpPort)) {
         Serial.println("connection failed");
+        sleep();
         return;
     }
 
@@ -77,7 +86,7 @@ void loop() {
     Serial.println(remoteTime);
 
     postSensorData(sensorName, remoteTime, dhtCelsius, dhtHumidity, batteryReading, batteryPercent);
-
-    Serial.println();
-    delay(loopDelay);
+    sleep();
 }
+
+void loop() {}
