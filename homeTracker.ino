@@ -62,14 +62,14 @@ void setup() {
         return;
     }
 
-    int* batteryData = readBatteryLevel();
-    int batteryReading = batteryData[0];
-    int batteryPercent = batteryData[1];
+    float* batteryData = readBatteryLevel();
+    float batteryCharge = batteryData[0];
+    float batteryPercent = batteryData[1];
     Serial.print("Battery: ");
     Serial.print(batteryPercent);
     Serial.print("% - ");
-    Serial.print(batteryReading);
-    Serial.println("%");
+    Serial.print(batteryCharge);
+    Serial.println("V");
 
     float* dhtReadings = readDHT();
     float dhtCelsius = dhtReadings[0];
@@ -81,11 +81,7 @@ void setup() {
     Serial.print(dhtHumidity);
     Serial.println("%");
 
-    double remoteTime = getRemoteTime();
-    Serial.print("Remote time: ");
-    Serial.println(remoteTime);
-
-    postSensorData(sensorName, remoteTime, dhtCelsius, dhtHumidity, batteryReading, batteryPercent);
+    postSensorData(sensorName, dhtCelsius, dhtHumidity, batteryCharge, batteryPercent);
     sleep();
 }
 

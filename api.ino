@@ -1,3 +1,4 @@
+// Kept for an example of a get request
 double getRemoteTime() {
     String path = "/health/getRemoteTime";
     String url = "http://" + String(host) + path;
@@ -10,10 +11,9 @@ double getRemoteTime() {
 
 void postSensorData(
     String sensorName,
-    double ts,
     float tempCelsius,
     float humidity,
-    int batteryReading,
+    float batteryCharge,
     int batteryPercent
 ) {
     String path = "/homeTracker/upload";
@@ -21,10 +21,9 @@ void postSensorData(
 
     JsonDocument doc;
     doc["sensorName"] = sensorName;
-    doc["ts"] = ts;
     doc["tempCelsius"] = tempCelsius;
     doc["humidity"] = humidity;
-    doc["batteryReading"] = batteryReading;
+    doc["batteryCharge"] = batteryCharge;
     doc["batteryPercent"] = batteryPercent;
 
     httpPOSTRequest(url, doc);
