@@ -14,7 +14,7 @@ void postSensorData(
     float tempCelsius,
     float humidity,
     float batteryCharge,
-    int batteryPercent
+    float batteryPercent
 ) {
     String path = "/homeTracker/upload";
     String url = "http://" + String(host) + path;
