@@ -47,9 +47,9 @@ General principle:
 - Initialize Wifi and check that the connection is working, if not go to sleep and try again later
 - Initialize the sensors
 - Do the readings, each sensor has its own file and a `read` function which return the different values in an array of `float`
+    - The battery level is also read on the analog pin thanks to a voltage divisor (battery max level is 4.2V, analog pin max read is 1V). More details in the code (TODO add schematics)
 - Pass the read values to a api function which will be reponsible for creating a JSON document and post it to the api.
 - Go to deep sleep and repeat.
 
 The configurations are in a dedicated header file to change the behavior easily from a central place (TODO move the sensor name there and implement a way to toggle which sensors to use)
-
 Some of the objects I'm making are intended to have only a DHT22 (to make indoor measurements) and some are intended to live in a weatherproof enclosure with one DHT22 inside the enclosure (to make sure the board and battery remain in a safe setting) and one BME280 outside of the enclosure of environmental measurements.
