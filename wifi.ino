@@ -47,11 +47,10 @@ boolean connectToSSID(const char* ssid, const char* password) {
     return true;
 }
 
-void initWifi() {
+boolean initWifi() {
     if (!connectToSSID(CONFIG_WIFI_SSID, CONFIG_WIFI_PASS)) {
         Serial.println("Connection to wifi failed");
-        sleep();
-        return;
+        return false;
     }
 
     // Use WiFiClient class to create TCP connections
@@ -59,7 +58,8 @@ void initWifi() {
     const int httpPort = 80;
     if (!client.connect(CONFIG_API_HOSTNAME, httpPort)) {
         Serial.println("Connection to API failed");
-        sleep();
-        return;
+        return false;
     }
+
+    return true;
 }

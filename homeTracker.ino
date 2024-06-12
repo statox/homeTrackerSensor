@@ -26,7 +26,11 @@ void setup() {
     Serial.println("===== Restart ======");
     Serial.println();
 
-    initWifi();
+    if (!initWifi()) {
+        sleep();
+        return;
+    }
+
     initDHT();
     initBME280();
 
