@@ -11,8 +11,8 @@
  * IMPORTANT Can't read the sensor more than ~once a second
  */
 
-#define DHTPIN 2       // what pin we're connected to
-#define DHTTYPE DHT11  // DHT 11
+#define DHTPIN 13      // Pin used to read the DHT sensor
+#define DHTTYPE DHT22  // Can be changed for DHT11 sensors (I don't use DHT11 anymore because the accuracy isn't good enough)
 
 // Initialize DHT sensor for normal 16mhz Arduino
 DHT dht(DHTPIN, DHTTYPE);
