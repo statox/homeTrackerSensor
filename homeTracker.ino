@@ -47,6 +47,7 @@ void setup() {
     Serial.println("===== Restart ======");
     Serial.println();
 
+    initBME280();
     connectToSSID(ssid, password);
     initDHT();
 
@@ -75,13 +76,41 @@ void setup() {
     float dhtCelsius = dhtReadings[0];
     float dhtHumidity = dhtReadings[1];
 
-    Serial.print("Temperature: ");
+    Serial.print("DHT - Temperature: ");
     Serial.print(dhtCelsius);
-    Serial.print("(C)  Hum: ");
+    Serial.print("°C");
+    Serial.print("\t\tHumidity: ");
     Serial.print(dhtHumidity);
     Serial.println("%");
 
-    postSensorData(sensorName, dhtCelsius, dhtHumidity, batteryCharge, batteryPercent);
+    float* bmeReadings = readBME280();
+    float bmeCelsius = bmeReadings[0];
+    float bmeHumidity = bmeReadings[1];
+    float bmePres = bmeReadings[2];
+
+    Serial.print("BME - Temp: ");
+    Serial.print(bmeCelsius);
+    Serial.print("°C");
+    Serial.print("\t\tHumidity: ");
+    Serial.print(bmeHumidity);
+    Serial.print("% RH");
+    Serial.print("\t\tPressure: ");
+    Serial.print(bmePres);
+    Serial.println("Pa");
+
+    postSensorData(
+        sensorName,
+
+        dhtCelsius,
+        dhtHumidity,
+
+        bmeCelsius,
+        bmeHumidity,
+        bmePres,
+
+        batteryCharge,
+        batteryPercent
+    );
     sleep();
 }
 

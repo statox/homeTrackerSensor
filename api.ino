@@ -11,8 +11,14 @@ double getRemoteTime() {
 
 void postSensorData(
     String sensorName,
-    float tempCelsius,
-    float humidity,
+
+    float dhtCelsius,
+    float dhtHumidity,
+
+    float bmeCelsius,
+    float bmeHumidity,
+    float bmePres,
+
     float batteryCharge,
     float batteryPercent
 ) {
@@ -21,8 +27,14 @@ void postSensorData(
 
     JsonDocument doc;
     doc["sensorName"] = sensorName;
-    doc["tempCelsius"] = tempCelsius;
-    doc["humidity"] = humidity;
+
+    doc["tempCelsius"] = dhtCelsius;
+    doc["humidity"] = dhtHumidity;
+
+    doc["pressurePa"] = bmePres;
+    doc["tempCelsius2"] = bmeCelsius;
+    doc["humidity2"] = bmeHumidity;
+
     doc["batteryCharge"] = batteryCharge;
     doc["batteryPercent"] = batteryPercent;
 
