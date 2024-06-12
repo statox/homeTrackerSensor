@@ -1,7 +1,7 @@
 // Kept for an example of a get request
 double getRemoteTime() {
     String path = "/health/getRemoteTime";
-    String url = "http://" + String(host) + path;
+    String url = "http://" + String(CONFIG_API_HOSTNAME) + path;
 
     JsonDocument remoteTimeResponse = httpGETRequest(url);
     double remoteTime = remoteTimeResponse["time"];
@@ -23,7 +23,7 @@ void postSensorData(
     float batteryPercent
 ) {
     String path = "/homeTracker/upload";
-    String url = "http://" + String(host) + path;
+    String url = "http://" + String(CONFIG_API_HOSTNAME) + path;
 
     JsonDocument doc;
     doc["sensorName"] = sensorName;

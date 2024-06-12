@@ -3,10 +3,6 @@
 #include <ESP8266HTTPClient.h>
 #include <ArduinoJson.h>
 
-const char* ssid     = CONFIG_WIFI_SSID;
-const char* password = CONFIG_WIFI_PASS;
-const char* host = CONFIG_API_HOSTNAME;
-
 const char* sensorName = "dev-sensor";
 
 const unsigned long oneMinute = 60e6;
@@ -30,21 +26,12 @@ void setup() {
     Serial.println("===== Restart ======");
     Serial.println();
 
-    initBME280();
-    connectToSSID(ssid, password);
+    initWifi();
     initDHT();
+    initBME280();
 
     Serial.println();
     blink(2, 500, 500);
-
-    // Use WiFiClient class to create TCP connections
-    WiFiClient client;
-    const int httpPort = 80;
-    if (!client.connect(host, httpPort)) {
-        Serial.println("connection failed");
-        sleep();
-        return;
-    }
 
     float* batteryData = readBatteryLevel();
     float batteryCharge = batteryData[0];

@@ -15,17 +15,28 @@ void scanSSIDS() {
     Serial.println();
 }
 
-void connectToSSID(const char* ssid, const char* password) {
+boolean connectToSSID(const char* ssid, const char* password) {
     Serial.print("Connecting to: ");
     Serial.println(ssid);
 
     WiFi.begin(ssid, password);
 
-    while (WiFi.status() != WL_CONNECTED) {
+    const int maxTries = 30;
+    int tries = 0;
+
+    while (WiFi.status() != WL_CONNECTED && tries < maxTries) {
+        tries++;
         delay(500);
-        Serial.print(".");
-        Serial.print(WiFi.status());
+        Serial.print("try ");
+        Serial.print(tries);
+        Serial.print(" status ");
+        Serial.println(WiFi.status());
+    }
+
+    if (tries == maxTries) {
         Serial.println();
+        Serial.println("WiFi not connected");
+        return false;
     }
 
     Serial.println();
@@ -33,4 +44,22 @@ void connectToSSID(const char* ssid, const char* password) {
     Serial.print("IP address: ");
     Serial.println(WiFi.localIP());
     Serial.println();
+    return true;
+}
+
+void initWifi() {
+    if (!connectToSSID(CONFIG_WIFI_SSID, CONFIG_WIFI_PASS)) {
+        Serial.println("Connection to wifi failed");
+        sleep();
+        return;
+    }
+
+    // Use WiFiClient class to create TCP connections
+    WiFiClient client;
+    const int httpPort = 80;
+    if (!client.connect(CONFIG_API_HOSTNAME, httpPort)) {
+        Serial.println("Connection to API failed");
+        sleep();
+        return;
+    }
 }
