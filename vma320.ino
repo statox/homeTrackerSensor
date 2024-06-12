@@ -7,7 +7,7 @@
  * IMPORTANT
  * We end up not using this sensor because it requires an analogue port
  * which we'll want to use to measure the battery level.
- * Also the readings seems less stable than the IDF11 and are probably
+ * Also the readings seems less stable than the DHT11/22 and are probably
  * less precise because of the homemade tension division
  *
  * This sensor uses the only analogue PIN of the ESP8266

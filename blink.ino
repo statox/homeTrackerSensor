@@ -1,3 +1,7 @@
+// On Adafruit Feather Huzzah ESP8266 the pin 0 is connected
+// to the built-in onboard red led
+// Setting the pin to LOW turns the led on
+
 void initBlink() {
     pinMode(0, OUTPUT);
 }
