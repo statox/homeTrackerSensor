@@ -9,23 +9,8 @@ const char* host = CONFIG_API_HOSTNAME;
 
 const char* sensorName = "dev-sensor";
 
-void blink(int times, int length, int interval) {
-    Serial.print("Blink");
-
-    for (int i=0; i<times; i++) {
-        Serial.print(".");
-        digitalWrite(0, LOW);
-        delay(length);
-        digitalWrite(0, HIGH);
-        delay(interval);
-    }
-    Serial.println();
-}
-
-
 const unsigned long oneMinute = 60e6;
 const unsigned long loopDelay = 10 * oneMinute;
-// const unsigned long loopDelay = 10e6;
 
 void sleep () {
     Serial.println();
@@ -37,9 +22,7 @@ void setup() {
     Serial.begin(9600);
     while(!Serial) { }
 
-    // Needed for blink
-    pinMode(0, OUTPUT);
-
+    initBlink();
     blink(10, 100, 100);
     Serial.println();
     Serial.println();
