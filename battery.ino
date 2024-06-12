@@ -51,14 +51,13 @@ float* readBatteryLevel() {
     // -37 for sensor1, -47 for sensor2
     int adcOffset = -47;
     float batteryReading = float(analogRead(A0) + adcOffset);
-    Serial.print("Battery reading: ");
-    Serial.println(batteryReading);
     float batteryPercent = mapFloat(batteryReading, 562, 726, 0, 100);
     float batteryCharge = mapFloat(batteryReading, 562, 726, 3.3, 4.3);
 
-    float* result = new float[2];
+    float* result = new float[3];
     result[0] = batteryCharge;
     result[1] = batteryPercent;
+    result[2] = batteryReading;
 
     return result;
 }

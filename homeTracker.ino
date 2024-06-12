@@ -40,11 +40,15 @@ void setup() {
     float* batteryData = readBatteryLevel();
     float batteryCharge = batteryData[0];
     float batteryPercent = batteryData[1];
-    Serial.print("Battery: ");
+    float batteryReading = batteryData[2];
+    Serial.print("Battery - Charge: ");
     Serial.print(batteryPercent);
-    Serial.print("% - ");
+    Serial.print("%");
+    Serial.print("\tVoltage:");
     Serial.print(batteryCharge);
-    Serial.println("V");
+    Serial.print("V");
+    Serial.print("\tAnalog reading: ");
+    Serial.println(batteryReading);
 
     float* dhtReadings = readDHT();
     float dhtCelsius = dhtReadings[0];
@@ -53,7 +57,7 @@ void setup() {
     Serial.print("DHT - Temperature: ");
     Serial.print(dhtCelsius);
     Serial.print("°C");
-    Serial.print("\t\tHumidity: ");
+    Serial.print("\tHumidity: ");
     Serial.print(dhtHumidity);
     Serial.println("%");
 
@@ -62,13 +66,13 @@ void setup() {
     float bmeHumidity = bmeReadings[1];
     float bmePres = bmeReadings[2];
 
-    Serial.print("BME - Temp: ");
+    Serial.print("BME - Temperature: ");
     Serial.print(bmeCelsius);
     Serial.print("°C");
-    Serial.print("\t\tHumidity: ");
+    Serial.print("\tHumidity: ");
     Serial.print(bmeHumidity);
-    Serial.print("% RH");
-    Serial.print("\t\tPressure: ");
+    Serial.print("%");
+    Serial.print("\tPressure: ");
     Serial.print(bmePres);
     Serial.println("Pa");
 
