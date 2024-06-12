@@ -1,11 +1,11 @@
+#include "arduino_secrets.h"
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <ArduinoJson.h>
 
-const char* ssid     = "CHANGEME";
-const char* password = "CHANGEME";
-
-const char* host = "api.statox.fr";
+const char* ssid     = CONFIG_WIFI_SSID;
+const char* password = CONFIG_WIFI_PASS;
+const char* host = CONFIG_API_HOSTNAME;
 
 const char* sensorName = "dev-sensor";
 

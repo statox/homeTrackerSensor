@@ -1,0 +1,4 @@
+#define CONFIG_WIFI_SSID "CHANGEME"
+#define CONFIG_WIFI_PASS "CHANGEME"
+
+#define CONFIG_API_HOSTNAME "api.statox.fr"
