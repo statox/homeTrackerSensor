@@ -1,5 +1,3 @@
-#include "DHT.h"
-
 /*
  * Code for the DHT11 temperature and humidity sensor using the
  * adafruit DHT sensor library https://github.com/adafruit/DHT-sensor-library
@@ -11,6 +9,9 @@
  * IMPORTANT Can't read the sensor more than ~once a second
  */
 
+#include "DHT.h"
+
+// TODO: Extract the define to main code
 #define DHTPIN 13      // Pin used to read the DHT sensor
 #define DHTTYPE DHT22  // Can be changed for DHT11 sensors (I don't use DHT11 anymore because the accuracy isn't good enough)
 

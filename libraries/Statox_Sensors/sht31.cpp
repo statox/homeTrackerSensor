@@ -8,8 +8,6 @@
   interface
  ****************************************************/
 
-#include <Arduino.h>
-#include <Wire.h>
 #include "Adafruit_SHT31.h"
 
 Adafruit_SHT31 sht31 = Adafruit_SHT31();
@@ -27,7 +25,6 @@ void initSHT31() {
         Serial.println("DISABLED");
 }
 
-
 float* readSHT31() {
     float temperature = sht31.readTemperature();
     float humidity = sht31.readHumidity();
@@ -36,9 +33,10 @@ float* readSHT31() {
     result[0] = temperature;
     result[1] = humidity;
 
-    return result;
     // TODO Check if it is interesting to enable the heater in winter
     // to evaporate condensation
     // An ~3.0 degC temperature increase can be noted when heater is enabled
     // sht31.heater(true);
+
+    return result;
 }

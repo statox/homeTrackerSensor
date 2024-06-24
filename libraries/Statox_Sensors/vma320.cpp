@@ -1,5 +1,3 @@
-#include <math.h>
-
 /*
  * Code for the VMA320 temperature sensor
  * https://www.velleman.eu/products/view/?country=be&lang=fr&id=435554
@@ -18,7 +16,10 @@
  * output of ESP8266 was 3.3V but it really is 3V)
  */
 
-#define SENSOR_PIN A0 // Input PIN: ADC (The only analogue pin on ESP8266)
+#include <Arduino.h>
+#include <math.h>
+
+#define VMA320_PIN A0 // Input PIN: ADC (The only analogue pin on ESP8266)
 
 // Based on https://stackoverflow.com/a/44932077/4194289
 double analogToCelsius(int RawADC) {
@@ -29,8 +30,8 @@ double analogToCelsius(int RawADC) {
     return Temp;
 }
 
-double readTempCelsius() {
-    int sensorvalue = analogRead(SENSOR_PIN);
+double readVMA320() {
+    int sensorvalue = analogRead(VMA320_PIN);
     double celsius = analogToCelsius(sensorvalue);
 
     return celsius;
