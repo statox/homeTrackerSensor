@@ -1,6 +1,7 @@
 #include "arduino_secrets.h"
 #include <ArduinoJson.h>
 #include "Statox_Sensors.h"
+#include "Statox_Blink.h"
 
 const char* sensorName = "dev-sensor";
 
