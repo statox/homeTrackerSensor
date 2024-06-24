@@ -1,4 +1,5 @@
-#include <ESP8266WiFi.h>
+#include <SPI.h>
+#include <WiFi101.h>
 
 boolean connectToSSID(const char* ssid, const char* password) {
     Serial.print("Connecting to: ");
@@ -33,6 +34,13 @@ boolean connectToSSID(const char* ssid, const char* password) {
 }
 
 boolean initWifi() {
+    WiFi.setPins(8,7,4,2);
+
+    if (WiFi.status() == WL_NO_SHIELD) {
+        Serial.println("WiFi shield not present");
+        return false;
+    }
+
     if (!connectToSSID(CONFIG_WIFI_SSID, CONFIG_WIFI_PASS)) {
         Serial.println("Connection to wifi failed");
         return false;
