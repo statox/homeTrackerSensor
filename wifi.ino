@@ -1,3 +1,5 @@
+#include <ESP8266WiFi.h>
+
 void scanSSIDS() {
     Serial.println("Disconnecting ... ");
 

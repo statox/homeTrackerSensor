@@ -1,3 +1,5 @@
+#include <ESP8266HTTPClient.h>
+
 // Expecting complete URL http://host/path
 JsonDocument httpGETRequest(String url) {
     Serial.println("GET " + url);
