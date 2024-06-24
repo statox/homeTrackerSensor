@@ -27,6 +27,19 @@ void setup() {
     Serial.println();
     blink(2, 500, 500);
 
+    float* batteryData = readBatteryLevel();
+    float batteryCharge = batteryData[0];
+    float batteryPercent = batteryData[1];
+    float batteryReading = batteryData[2];
+    Serial.print("Battery - Charge: ");
+    Serial.print(batteryPercent);
+    Serial.print("%");
+    Serial.print("\tVoltage:");
+    Serial.print(batteryCharge);
+    Serial.print("V");
+    Serial.print("\tAnalog reading: ");
+    Serial.println(batteryReading);
+
     float* shtReadings = readSHT31();
     float shtCelsius = shtReadings[0];
     float shtHumidity = shtReadings[1];
@@ -44,8 +57,8 @@ void setup() {
         shtCelsius,
         shtHumidity,
 
-        0,
-        0
+        batteryCharge,
+        batteryPercent
     );
 }
 
