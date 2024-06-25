@@ -18,13 +18,11 @@ void setup() {
     Serial.println();
     Serial.println("===== Restart ======");
     Serial.println();
-
-    initSleep();
 }
 
 void loop() {
     if (!initWifi()) {
-        Serial.println("WIFI FAILED STOPPING");
+        Serial.println("WIFI FAILED. STOPPING");
         sleep();
         return;
     }
