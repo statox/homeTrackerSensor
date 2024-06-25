@@ -7,7 +7,9 @@ const char* sensorName = "dev-sensor-3";
 
 void setup() {
     Serial.begin(9600);
-    while(!Serial) { }
+    // Add a safe guard of 10 seconds because when starting unplugged from USB
+    // Serial will never be available. TODO Find out why its not needed on ESP8266
+    while(!Serial && millis() < 5000) {}
 
     initBlink();
     blink(10, 100, 100);
