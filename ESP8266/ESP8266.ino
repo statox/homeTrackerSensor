@@ -32,15 +32,12 @@ void setup() {
     float* batteryData = readBatteryLevel();
     float batteryCharge = batteryData[0];
     float batteryPercent = batteryData[1];
-    float batteryReading = batteryData[2];
     Serial.print("Battery - Charge: ");
     Serial.print(batteryPercent);
     Serial.print("%");
     Serial.print("\tVoltage:");
     Serial.print(batteryCharge);
-    Serial.print("V");
-    Serial.print("\tAnalog reading: ");
-    Serial.println(batteryReading);
+    Serial.println("V");
 
     float* dhtReadings = readDHT();
     float dhtCelsius = dhtReadings[0];

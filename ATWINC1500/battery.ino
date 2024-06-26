@@ -16,10 +16,9 @@ float* readBatteryLevel() {
 
     float batteryPercent = mapFloat(batteryCharge, 3.3, 4.3, 0, 100);
 
-    float* result = new float[3];
+    float* result = new float[2];
     result[0] = batteryCharge;
     result[1] = batteryPercent;
-    result[2] = batteryReading;
 
     return result;
 }
