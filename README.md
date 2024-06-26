@@ -14,7 +14,7 @@ Both directories contain board-specific versions of the same code for interfacin
 - The [libraries](./libraries) directory holds common code used by both board-specific projects and other dependencies.
     - [Statox_Blink](./libraries/Statox_Blink) is a utility for blinking the built-in LED of the boards.
     - [Statox_Sensors](./libraries/Statox_Sensors) is my collection of wrappers around other libraries for reading various sensors ([BME280](https://whadda.com/product/bme280-temperature-humidity-and-pressure-sensor-wpse335/), [DHT11/22](https://learn.adafruit.com/dht), [SHT30](https://www.adafruit.com/product/5064), [NTC-MF52 thermistors](https://www.velleman.eu/products/view/?id=435554))
-    - [arduino_secrets](./libraries/arduino_secrets) contains configuration files for the sensors I'm creating. (e.g. WiFi SSID and passwords)
+    - [Statox_Config](./libraries/Statox_Config) contains configuration header files for the sensors I'm creating. (e.g. WiFi SSID and passwords) (Only `*.sample.h` files are versioned they must be copied to their equivalent without `.sample` in their name)
     - The other directories are libraries installed via Arduino IDE. (TODO Find a better way to manage that?) I am not the author of these libraries their individual licenses should be respected.
 
 The project is designed to be opened by Arduino IDE 2.x as a "Sketchbook"

@@ -1,9 +1,10 @@
-#include "arduino_secrets.h"
+#include "secrets.h"
+#include "config.h"
 #include <ArduinoJson.h>
 #include "Statox_Sensors.h"
 #include "Statox_Blink.h"
 
-const char* sensorName = "dev-sensor-3";
+const char* sensorName = CONFIG_SENSOR_NAME;
 
 void setup() {
     Serial.begin(9600);

@@ -1,4 +1,5 @@
-#include "arduino_secrets.h"
+#include "secrets.h"
+#include "config.h"
 #include <ArduinoJson.h>
 #include "Statox_Sensors.h"
 #include "Statox_Blink.h"

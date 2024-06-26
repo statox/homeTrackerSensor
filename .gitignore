@@ -1,1 +1,4 @@
-libraries/arduino_secrets/arduino_secrets.h
+# Ignore the header files in the config directory but not their sample
+# (i.e. keep the samples in VCS but dont watch the changes to the actual files)
+libraries/Statox_Config/*.h
+!libraries/Statox_Config/*.sample.h

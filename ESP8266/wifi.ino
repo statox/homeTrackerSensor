@@ -33,7 +33,7 @@ boolean connectToSSID(const char* ssid, const char* password) {
 }
 
 boolean initWifi() {
-    if (!connectToSSID(CONFIG_WIFI_SSID, CONFIG_WIFI_PASS)) {
+    if (!connectToSSID(SECRET_WIFI_SSID, SECRET_WIFI_PASS)) {
         Serial.println("Connection to wifi failed");
         return false;
     }
