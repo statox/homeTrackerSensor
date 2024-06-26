@@ -4,7 +4,19 @@
 #include "Statox_Sensors.h"
 #include "Statox_Blink.h"
 
-const char* sensorName = CONFIG_SENSOR_NAME;
+typedef struct {
+    char* sensorName;
+
+    float tempCelsius;
+    float humidity;
+    float pressurePa;
+
+    float internalTempCelsius;
+    float internalHumidity;
+
+    float batteryCharge;
+    float batteryPercent;
+} ApiData;
 
 void setup() {
     Serial.begin(9600);
@@ -32,35 +44,26 @@ void loop() {
     Serial.println();
     blink(2, 500, 500);
 
+    ApiData apiData = {};
+    apiData.sensorName = CONFIG_SENSOR_NAME;
+
     float* batteryData = readBatteryLevel();
-    float batteryCharge = batteryData[0];
-    float batteryPercent = batteryData[1];
-    Serial.print("Battery - Charge: ");
-    Serial.print(batteryPercent);
-    Serial.print("%");
-    Serial.print("\tVoltage:");
-    Serial.print(batteryCharge);
-    Serial.println("V");
+    apiData.batteryCharge = batteryData[0];
+    apiData.batteryPercent = batteryData[1];
 
-    float* shtReadings = readSHT31();
-    float shtCelsius = shtReadings[0];
-    float shtHumidity = shtReadings[1];
+    float* sensorReadings = readSHT31();
+    apiData.tempCelsius = sensorReadings[0];
+    apiData.humidity = sensorReadings[1];
+    #ifdef HAS_PRESSURE_SENSOR
+    apiData.pressurePa = sensorReadings[2];
+    #endif
 
-    Serial.print("SHT - Temperature: ");
-    Serial.print(shtCelsius);
-    Serial.print("°C");
-    Serial.print("\tHumidity: ");
-    Serial.print(shtHumidity);
-    Serial.println("%");
+    #ifdef HAS_INTERNAL_SENSOR
+    float* internalSensorReadings = readDHT();
+    apiData.internalTempCelsius = internalSensorReadings[0];
+    apiData.internalHumidity = internalSensorReadings[1];
+    #endif
 
-    postSensorData(
-        sensorName,
-
-        shtCelsius,
-        shtHumidity,
-
-        batteryCharge,
-        batteryPercent
-    );
+    postSensorData(apiData);
     sleep();
 }

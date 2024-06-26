@@ -4,7 +4,19 @@
 #include "Statox_Sensors.h"
 #include "Statox_Blink.h"
 
-const char* sensorName = "dev-sensor";
+typedef struct {
+    char* sensorName;
+
+    float tempCelsius;
+    float humidity;
+    float pressurePa;
+
+    float internalTempCelsius;
+    float internalHumidity;
+
+    float batteryCharge;
+    float batteryPercent;
+} ApiData;
 
 void setup() {
     Serial.begin(9600);
@@ -29,55 +41,27 @@ void setup() {
     Serial.println();
     blink(2, 500, 500);
 
+    ApiData apiData = {};
+    apiData.sensorName = CONFIG_SENSOR_NAME;
+
     float* batteryData = readBatteryLevel();
-    float batteryCharge = batteryData[0];
-    float batteryPercent = batteryData[1];
-    Serial.print("Battery - Charge: ");
-    Serial.print(batteryPercent);
-    Serial.print("%");
-    Serial.print("\tVoltage:");
-    Serial.print(batteryCharge);
-    Serial.println("V");
+    apiData.batteryCharge = batteryData[0];
+    apiData.batteryPercent = batteryData[1];
 
-    float* dhtReadings = readDHT();
-    float dhtCelsius = dhtReadings[0];
-    float dhtHumidity = dhtReadings[1];
+    float* sensorReadings = readBME280();
+    apiData.tempCelsius = sensorReadings[0];
+    apiData.humidity = sensorReadings[1];
+    #ifdef HAS_PRESSURE_SENSOR
+    apiData.pressurePa = sensorReadings[2];
+    #endif
 
-    Serial.print("DHT - Temperature: ");
-    Serial.print(dhtCelsius);
-    Serial.print("°C");
-    Serial.print("\tHumidity: ");
-    Serial.print(dhtHumidity);
-    Serial.println("%");
+    #ifdef HAS_INTERNAL_SENSOR
+    float* internalSensorReadings = readDHT();
+    apiData.internalTempCelsius = internalSensorReadings[0];
+    apiData.internalHumidity = internalSensorReadings[1];
+    #endif
 
-    float* bmeReadings = readBME280();
-    float bmeCelsius = bmeReadings[0];
-    float bmeHumidity = bmeReadings[1];
-    float bmePres = bmeReadings[2];
-
-    Serial.print("BME - Temperature: ");
-    Serial.print(bmeCelsius);
-    Serial.print("°C");
-    Serial.print("\tHumidity: ");
-    Serial.print(bmeHumidity);
-    Serial.print("%");
-    Serial.print("\tPressure: ");
-    Serial.print(bmePres);
-    Serial.println("Pa");
-
-    postSensorData(
-        sensorName,
-
-        dhtCelsius,
-        dhtHumidity,
-
-        bmeCelsius,
-        bmeHumidity,
-        bmePres,
-
-        batteryCharge,
-        batteryPercent
-    );
+    postSensorData(apiData);
     sleep();
 }
 
