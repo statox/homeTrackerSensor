@@ -1,29 +1,18 @@
 #include "secrets.h"
 #include "config.h"
 #include <ArduinoJson.h>
-#include "Statox_Sensors.h"
+#include "Statox_Api.h"
 #include "Statox_Blink.h"
-
-typedef struct {
-    char* sensorName;
-
-    float tempCelsius;
-    float humidity;
-    float pressurePa;
-
-    float internalTempCelsius;
-    float internalHumidity;
-
-    float batteryCharge;
-    float batteryPercent;
-} ApiData;
+#include "Statox_Sensors.h"
 
 void setup() {
     Serial.begin(9600);
     // Add a safe guard of 10 seconds because when starting unplugged from USB
     // Serial will never be available. TODO Find out why its not needed on ESP8266
     while(!Serial && millis() < 5000) {}
+}
 
+void loop() {
     initBlink();
     blink(10, 100, 100);
     Serial.println();
@@ -31,9 +20,7 @@ void setup() {
     Serial.println();
     Serial.println("===== Restart ======");
     Serial.println();
-}
 
-void loop() {
     if (!initWifi()) {
         sleep();
         return;

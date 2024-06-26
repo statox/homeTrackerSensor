@@ -1,22 +1,9 @@
 #include "secrets.h"
 #include "config.h"
 #include <ArduinoJson.h>
-#include "Statox_Sensors.h"
+#include "Statox_Api.h"
 #include "Statox_Blink.h"
-
-typedef struct {
-    char* sensorName;
-
-    float tempCelsius;
-    float humidity;
-    float pressurePa;
-
-    float internalTempCelsius;
-    float internalHumidity;
-
-    float batteryCharge;
-    float batteryPercent;
-} ApiData;
+#include "Statox_Sensors.h"
 
 void setup() {
     Serial.begin(9600);
