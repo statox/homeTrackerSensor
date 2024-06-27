@@ -22,9 +22,6 @@ void setup() {
         return;
     }
 
-    initDHT();
-    initBME280();
-
     Serial.println();
     blink(2, 500, 500);
 
@@ -35,7 +32,7 @@ void setup() {
     apiData.batteryCharge = batteryData[0];
     apiData.batteryPercent = batteryData[1];
 
-    float* sensorReadings = readBME280();
+    float* sensorReadings = readDHT();
     apiData.tempCelsius = sensorReadings[0];
     apiData.humidity = sensorReadings[1];
     #ifdef HAS_PRESSURE_SENSOR

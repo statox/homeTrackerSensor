@@ -26,8 +26,6 @@ void loop() {
         return;
     }
 
-    initSHT31();
-
     Serial.println();
     blink(2, 500, 500);
 

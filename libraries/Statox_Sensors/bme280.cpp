@@ -7,10 +7,9 @@ BME280I2C bme;
 
 void initBME280() {
     Wire.begin();
-    while(!bme.begin()) {
+    if(!bme.begin()) {
         Serial.println("Could not find BME280 sensor!");
-        // Should fail the call instead of keep retrying
-        delay(1000);
+        return;
     }
 
     switch(bme.chipModel()) {
@@ -26,6 +25,8 @@ void initBME280() {
 }
 
 float* readBME280() {
+    initBME280();
+
     float temperature(NAN), humidity(NAN), pressure(NAN);
 
     BME280::TempUnit tempUnit(BME280::TempUnit_Celsius);

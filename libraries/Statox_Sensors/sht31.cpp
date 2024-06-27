@@ -13,19 +13,22 @@
 Adafruit_SHT31 sht31 = Adafruit_SHT31();
 
 void initSHT31() {
-    while(!sht31.begin(0x44)) {   // Set to 0x45 for alternate i2c addr
+    if(!sht31.begin(0x44)) {   // Set to 0x45 for alternate i2c addr
         Serial.println("Couldn't find SHT31");
-        delay(1000);
+        return;
     }
 
     Serial.print("SHT31 found. Heater Enabled State: ");
-    if (sht31.isHeaterEnabled())
+    if (sht31.isHeaterEnabled()) {
         Serial.println("ENABLED");
-    else
+    } else {
         Serial.println("DISABLED");
+    }
 }
 
 float* readSHT31() {
+    initSHT31();
+
     float temperature = sht31.readTemperature();
     float humidity = sht31.readHumidity();
 
