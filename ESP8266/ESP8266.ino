@@ -7,8 +7,10 @@
 
 void setup() {
     Serial.begin(9600);
-    while(!Serial) { }
+    while(!Serial && millis() < 5000) {}
+}
 
+void loop() {
     initBlink();
     blink(10, 100, 100);
     Serial.println();
@@ -48,5 +50,3 @@ void setup() {
     postSensorData(apiData);
     sleep();
 }
-
-void loop() {}
