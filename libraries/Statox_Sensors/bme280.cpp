@@ -5,11 +5,11 @@
 // Oversampling = pressure ×1, temperature ×1, humidity ×1, filter off,
 BME280I2C bme;
 
-void initBME280() {
+bool initBME280() {
     Wire.begin();
     if(!bme.begin()) {
         Serial.println("Could not find BME280 sensor!");
-        return;
+        return false;
     }
 
     switch(bme.chipModel()) {
@@ -22,19 +22,23 @@ void initBME280() {
         default:
             Serial.println("Found UNKNOWN sensor! Error!");
     }
+
+    return true;
 }
 
 float* readBME280() {
-    initBME280();
+    float* result = new float[3];
+
+    if (!initBME280()) {
+        return result;
+    }
 
     float temperature(NAN), humidity(NAN), pressure(NAN);
-
     BME280::TempUnit tempUnit(BME280::TempUnit_Celsius);
     BME280::PresUnit presUnit(BME280::PresUnit_Pa);
 
     bme.read(pressure, temperature, humidity, tempUnit, presUnit);
 
-    float* result = new float[3];
     result[0] = temperature;
     result[1] = humidity;
     result[2] = pressure;

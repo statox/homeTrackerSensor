@@ -1,5 +1,5 @@
 typedef struct {
-    char* sensorName;
+    String sensorName;
 
     float tempCelsius;
     float humidity;

@@ -1,37 +1,35 @@
-#include <ESP8266HTTPClient.h>
+#include <ArduinoHttpClient.h>
+#include <WiFi101.h>
 
 // Expecting complete URL http://host/path
 JsonDocument httpGETRequest(String url) {
     Serial.println("GET " + url);
 
     WiFiClient client;
-    HTTPClient http;
+    HttpClient http = HttpClient(client, CONFIG_API_HOSTNAME, 80);
 
-    http.begin(client, url);
+    http.get(url);
 
-    int httpResponseCode = http.GET();
+    int httpResponseCode = http.responseStatusCode();
     JsonDocument response;
 
     if (httpResponseCode<=0) {
         Serial.print("Error code: ");
         Serial.println(httpResponseCode);
 
-        http.end();
         return response;
     }
 
-    DeserializationError error = deserializeJson(response, http.getString());
+    DeserializationError error = deserializeJson(response, http.responseBody());
 
     // Test if parsing succeeds.
     if (error) {
         Serial.print("deserializeJson() failed: ");
         Serial.println(error.f_str());
 
-        http.end();
         return response;
     }
 
-    http.end();
     return response;
 }
 
@@ -43,17 +41,15 @@ void httpPOSTRequest(String url, JsonDocument payload) {
     serializeJson(payload, Serial);
 
     WiFiClient client;
-    HTTPClient http;
+    HttpClient http = HttpClient(client, CONFIG_API_HOSTNAME, 80);
 
-    http.begin(client, url);
+    String contentType = "application/json";
+    http.post(url, contentType, payloadStr);
 
-    http.addHeader("Content-Type", "application/json");
-    int httpResponseCode = http.POST(payloadStr);
+    int httpResponseCode = http.responseStatusCode();
 
     if (httpResponseCode<=0) {
         Serial.print("Error code: ");
         Serial.println(httpResponseCode);
     }
-
-    http.end();
 }

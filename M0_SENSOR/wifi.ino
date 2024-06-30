@@ -1,5 +1,6 @@
 #include <SPI.h>
 #include <WiFi101.h>
+#include "secrets.h"
 
 boolean connectToSSID(const char* ssid, const char* password) {
     Serial.print("Connecting to: ");

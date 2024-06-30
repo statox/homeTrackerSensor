@@ -10,10 +10,10 @@
  */
 
 #include "DHT.h"
+#include "config.h"
+
 
 // TODO: Extract the define to main code
-#define DHTPIN 13      // Pin used to read the DHT sensor
-#define DHTTYPE DHT22  // Can be changed for DHT11 sensors (I don't use DHT11 anymore because the accuracy isn't good enough)
 
 // Initialize DHT sensor for normal 16mhz Arduino
 DHT dht(DHTPIN, DHTTYPE);
@@ -35,17 +35,10 @@ float* readDHT() {
     result[0] = t;
     result[1] = h;
 
-
     // Check if any reads failed and exit early (to try again).
     if (isnan(h) || isnan(t)) {
         Serial.println("Failed to read from DHT sensor!");
     }
-
-    // TODO Check what is "heat index"
-    // Compute heat index
-    // Must send in temp in Fahrenheit!
-    // float f = dht.readTemperature(true);
-    // float hi = dht.computeHeatIndex(f, h);
 
     return result;
 }

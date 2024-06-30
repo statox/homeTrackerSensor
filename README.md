@@ -6,10 +6,12 @@ I have discussed this project on my blog at [statox.fr](https://www.statox.fr/po
 
 # Software architecture and setup
 
-- The [ATWINC1500](./ATWINC1500) directory contains code for uploading to [Adafruit Feather M0 WiFi](https://www.adafruit.com/product/3010) boards
-- The [ESP8266](./ESP8266) directory contains code for uploading to [Adafruit Feather Huzzah](https://www.adafruit.com/product/2821) boards
+- ~~The [ATWINC1500](https://github.com/statox/homeTrackerSensor/tree/f09cc6b5924b6409a57263a870297b3a715aa7ad/ATWINC1500) directory contains code for uploading to [Adafruit Feather M0 WiFi](https://www.adafruit.com/product/3010) boards~~
+- ~~The [ESP8266](https://github.com/statox/homeTrackerSensor/tree/f09cc6b5924b6409a57263a870297b3a715aa7ad/ESP8266) directory contains code for uploading to [Adafruit Feather Huzzah](https://www.adafruit.com/product/2821) boards~~
 
-Both directories contain board-specific versions of the same code for interfacing with the network, reading the battery level, starting deep sleep mode and running the main loop.
+~~Both directories contain board-specific versions of the same code for interfacing with the network, reading the battery level, starting deep sleep mode and running the main loop.~~
+
+The project now uses only [Adafruit Feather M0 WiFi](https://www.adafruit.com/product/3010) boards to keep things simple. The code of the sketch is in the [M0_SENSOR](./M0_SENSOR) directory.
 
 - The [libraries](./libraries) directory holds common code used by both board-specific projects and other dependencies.
     - [Statox_Blink](./libraries/Statox_Blink) is a utility for blinking the built-in LED of the boards.

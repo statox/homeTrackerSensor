@@ -1,13 +1,12 @@
-#include "secrets.h"
-#include "config.h"
 #include <ArduinoJson.h>
+#include "config.h"
 #include "Statox_Api.h"
 #include "Statox_Blink.h"
 #include "Statox_Sensors.h"
 
 void setup() {
     Serial.begin(9600);
-    while(!Serial && millis() < 5000) {}
+    while(!Serial && millis() < 1000) {}
 }
 
 void loop() {
@@ -34,18 +33,25 @@ void loop() {
     apiData.batteryCharge = batteryData[0];
     apiData.batteryPercent = batteryData[1];
 
+#if defined(MAIN_SENSOR_BME)
+    float* sensorReadings = readBME280();
+#elif defined(MAIN_SENSOR_DHT)
+    float* sensorReadings = readDHT();
+#elif defined(MAIN_SENSOR_SHT)
     float* sensorReadings = readSHT31();
+#endif
+
     apiData.tempCelsius = sensorReadings[0];
     apiData.humidity = sensorReadings[1];
-    #ifdef HAS_PRESSURE_SENSOR
+#ifdef MAIN_SENSOR_BME
     apiData.pressurePa = sensorReadings[2];
-    #endif
+#endif
 
-    #ifdef HAS_INTERNAL_SENSOR
+#ifdef HAS_INTERNAL_SENSOR
     float* internalSensorReadings = readDHT();
     apiData.internalTempCelsius = internalSensorReadings[0];
     apiData.internalHumidity = internalSensorReadings[1];
-    #endif
+#endif
 
     postSensorData(apiData);
     sleep();

@@ -8,6 +8,7 @@ const int LED_PIN = 13;
 const int ON = HIGH;
 const int OFF = LOW;
 #else
+// NOT USED ANYMORE
 // On Adafruit Feather Huzzah ESP8266 the pin 0 is connected
 // to the built-in onboard red led
 // Setting the pin to LOW turns the led on
