@@ -8,7 +8,7 @@ void postSensorData(ApiData apiData) {
     doc["tempCelsius"] = apiData.tempCelsius;
     doc["humidity"] = apiData.humidity;
 
-    #ifdef HAS_PRESSURE_SENSOR
+    #ifdef MAIN_SENSOR_BME
     doc["pressurePa"] = apiData.pressurePa;
     #endif
 
