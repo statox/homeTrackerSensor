@@ -12,3 +12,11 @@ void sleep () {
     WiFi.end();
     LowPower.deepSleep(loopDelay);
 }
+
+void shutdown() {
+    Serial.println();
+    Serial.println("Shuting down (infinite deepsleep) ");
+
+    WiFi.end();
+    LowPower.deepSleep();
+}

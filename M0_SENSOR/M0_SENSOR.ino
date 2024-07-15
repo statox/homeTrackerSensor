@@ -1,12 +1,16 @@
 #include <ArduinoJson.h>
 #include "config.h"
+#include "BatteryManager.h"
 #include "Statox_Api.h"
 #include "Statox_Blink.h"
 #include "Statox_Sensors.h"
 
+BatteryManager batteryManager(A7);
+
 void setup() {
     Serial.begin(9600);
     while(!Serial && millis() < 1000) {}
+    batteryManager.initializeData();
 }
 
 void loop() {
@@ -29,9 +33,15 @@ void loop() {
     ApiData apiData = {};
     apiData.sensorName = CONFIG_SENSOR_NAME;
 
-    float* batteryData = readBatteryLevel();
-    apiData.batteryCharge = batteryData[0];
-    apiData.batteryPercent = batteryData[1];
+    batteryManager.updateData();
+
+    if (batteryManager.mustShutdown()) {
+        // Trigger deepsleep without timeout to try avoiding depleting the battery
+        shutdown();
+    }
+
+    apiData.batteryCharge = batteryManager.batteryData.charge;
+    apiData.batteryPercent = batteryManager.batteryData.percent;
 
 #if defined(MAIN_SENSOR_BME)
     float* sensorReadings = readBME280();
