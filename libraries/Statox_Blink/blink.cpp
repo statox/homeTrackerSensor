@@ -22,6 +22,7 @@ void initBlink() {
 }
 
 void blink(int times, int length, int interval) {
+    Serial.println();
     Serial.print("Blink");
 
     for (int i=0; i<times; i++) {
@@ -33,4 +34,3 @@ void blink(int times, int length, int interval) {
     }
     Serial.println();
 }
-

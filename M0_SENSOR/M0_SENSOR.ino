@@ -27,8 +27,7 @@ void loop() {
         return;
     }
 
-    Serial.println();
-    blink(2, 500, 500);
+    blink(1, 500, 500);
 
     ApiData apiData = {};
     apiData.sensorName = CONFIG_SENSOR_NAME;
@@ -39,6 +38,7 @@ void loop() {
         // Trigger deepsleep without timeout to try avoiding depleting the battery
         shutdown();
     }
+    blink(1, 500, 500);
 
     apiData.batteryCharge = batteryManager.batteryData.charge;
     apiData.batteryPercent = batteryManager.batteryData.percent;
@@ -51,6 +51,8 @@ void loop() {
     float* sensorReadings = readSHT31();
 #endif
 
+    blink(1, 500, 500);
+
     apiData.tempCelsius = sensorReadings[0];
     apiData.humidity = sensorReadings[1];
 #ifdef MAIN_SENSOR_BME
@@ -61,8 +63,10 @@ void loop() {
     float* internalSensorReadings = readDHT();
     apiData.internalTempCelsius = internalSensorReadings[0];
     apiData.internalHumidity = internalSensorReadings[1];
+    blink(1, 500, 500);
 #endif
 
     postSensorData(apiData);
+    blink(2, 100, 100);
     sleep();
 }
