@@ -1,19 +1,29 @@
 #include <ArduinoJson.h>
 #include "config.h"
 #include "BatteryManager.h"
+#include "BoardWatcher.h"
 #include "Statox_Api.h"
 #include "Statox_Blink.h"
 #include "Statox_Sensors.h"
 
+// Loop should take ~7s so 30s gives some margin for a slow wifi
+BoardWatcher boardWatcher(30 * 1000);
 BatteryManager batteryManager(A7);
+
+void TC3_Handler() {
+    boardWatcher.timerCallback();
+}
 
 void setup() {
     Serial.begin(9600);
     while(!Serial && millis() < 1000) {}
+    boardWatcher.init();
     batteryManager.initializeData();
 }
 
 void loop() {
+    boardWatcher.newLoop();
+
     initBlink();
     blink(10, 100, 100);
     Serial.println();
