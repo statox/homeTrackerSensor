@@ -10,6 +10,8 @@ typedef struct {
 
     float batteryCharge;
     float batteryPercent;
+
+    int timeToSendMs;
 } ApiData;
 
 void postSensorData(ApiData apiData);

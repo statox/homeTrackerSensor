@@ -8,6 +8,7 @@ public:
     void newLoop();
     void timerCallback();
 
+    int currentLoopTime();
 private:
     int maxLoopRunningTimeMS;
     int lastLoopStart;

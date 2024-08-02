@@ -92,6 +92,10 @@ void BoardWatcher::newLoop() {
     this->lastLoopStart = millis();
 }
 
+int BoardWatcher::currentLoopTime() {
+    return millis() - this->lastLoopStart;
+}
+
 /**
  * Callback to be executed by the TC3_Handler() (i.e. the interrupt function)
  * It's role is to check if the current interrupt must run a check, check the

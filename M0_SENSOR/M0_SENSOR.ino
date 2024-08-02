@@ -76,6 +76,7 @@ void loop() {
     blink(1, 500, 500);
 #endif
 
+    apiData.timeToSendMs = boardWatcher.currentLoopTime();
     postSensorData(apiData);
     blink(2, 100, 100);
     sleep();
