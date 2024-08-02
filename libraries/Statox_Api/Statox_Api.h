@@ -13,6 +13,7 @@ typedef struct {
 
     int timeToSendMs;
     bool detectedLowBattery;
+    bool detectedForcedReset;
 } ApiData;
 
 void postSensorData(ApiData apiData);

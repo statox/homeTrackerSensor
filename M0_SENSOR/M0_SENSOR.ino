@@ -10,6 +10,7 @@
 BoardWatcher boardWatcher(30 * 1000);
 BatteryManager batteryManager(A7);
 
+bool detectedForcedReset = false;;
 void TC3_Handler() {
     boardWatcher.timerCallback();
 }
@@ -19,6 +20,10 @@ void setup() {
     while(!Serial && millis() < 1000) {}
     boardWatcher.init();
     batteryManager.initializeData();
+
+    if (PM->RCAUSE.bit.SYST == 1) {
+        detectedForcedReset = true;
+    }
 }
 
 void loop() {
@@ -76,8 +81,11 @@ void loop() {
 #endif
 
     apiData.timeToSendMs = boardWatcher.currentLoopTime();
+    apiData.detectedForcedReset = detectedForcedReset;
     postSensorData(apiData);
     blink(2, 100, 100);
+
+    detectedForcedReset = false;
 
     if (lowBattery) {
         // Trigger deepsleep without timeout to try avoiding depleting the battery
