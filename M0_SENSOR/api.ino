@@ -21,6 +21,7 @@ void postSensorData(ApiData apiData) {
     doc["batteryPercent"] = apiData.batteryPercent;
 
     doc["timeToSendMs"] = apiData.timeToSendMs;
+    doc["detectedLowBattery"] = apiData.detectedLowBattery;
 
     httpPOSTRequest(url, doc);
 }

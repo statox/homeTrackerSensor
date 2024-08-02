@@ -43,10 +43,9 @@ void loop() {
     apiData.sensorName = CONFIG_SENSOR_NAME;
 
     batteryManager.updateData();
-
-    if (batteryManager.mustShutdown()) {
-        // Trigger deepsleep without timeout to try avoiding depleting the battery
-        shutdown();
+    bool lowBattery = batteryManager.mustShutdown();
+    if (lowBattery) {
+        apiData.detectedLowBattery = lowBattery;
     }
     blink(1, 500, 500);
 
@@ -79,5 +78,11 @@ void loop() {
     apiData.timeToSendMs = boardWatcher.currentLoopTime();
     postSensorData(apiData);
     blink(2, 100, 100);
+
+    if (lowBattery) {
+        // Trigger deepsleep without timeout to try avoiding depleting the battery
+        shutdown();
+    }
+
     sleep();
 }

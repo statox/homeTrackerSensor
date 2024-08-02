@@ -32,6 +32,6 @@ void BatteryManager::updateData() {
 }
 
 bool BatteryManager::mustShutdown() {
-    // Less than 3V is low battery, more than 4.5V is invalid reading
+    // Less than 3.7V is low battery, more than 4.5V is invalid reading
     return batteryData.charge < 3.5 || batteryData.charge > 4.5;
 }
