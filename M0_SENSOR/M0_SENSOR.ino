@@ -1,3 +1,4 @@
+#include <Adafruit_SleepyDog.h>
 #include <ArduinoJson.h>
 #include "config.h"
 #include "BatteryManager.h"
@@ -14,7 +15,7 @@ void setup() {
     while(!Serial && millis() < 1000) {}
     batteryManager.initializeData();
 
-    if (PM->RCAUSE.bit.SYST == 1) {
+    if (Watchdog.resetCause() == 32) {
         detectedForcedReset = true;
     }
 }
@@ -28,11 +29,21 @@ void loop() {
     Serial.println("===== Restart ======");
     Serial.println();
 
+    // Watchdog provided by the SleepyDog library
+    // Giving it 10 seconds setups a max time before reset of about 8s (not sure why)
+    // which should be enough: A Loop lasts ~7 seconds and we reset the watchdog
+    // several times during the loop.
+    // If one operation loops for too long the watchdog will trigger a reset of the board.
+    // IMPORTANT: Make sure to disable the watchdog before sleep or shutdown otherwise it
+    // will reset the board during the sleep
+    int countdownMS = Watchdog.enable(10000);
+
     if (!initWifi()) {
+        Watchdog.disable();
         sleep();
         return;
     }
-
+    Watchdog.reset();
     blink(1, 500, 500);
 
     ApiData apiData = {};
@@ -43,6 +54,7 @@ void loop() {
     if (lowBattery) {
         apiData.detectedLowBattery = lowBattery;
     }
+    Watchdog.reset();
     blink(1, 500, 500);
 
     apiData.batteryCharge = batteryManager.batteryData.charge;
@@ -56,6 +68,7 @@ void loop() {
     float* sensorReadings = readSHT31();
 #endif
 
+    Watchdog.reset();
     blink(1, 500, 500);
 
     if (sensorReadings[0] == 0) {
@@ -78,19 +91,23 @@ void loop() {
     } else {
         apiData.detectedInternalSensorFailure = true;
     }
+    Watchdog.reset();
     blink(1, 500, 500);
 #endif
 
     apiData.detectedForcedReset = detectedForcedReset;
     postSensorData(apiData);
+    Watchdog.reset();
     blink(2, 100, 100);
 
     detectedForcedReset = false;
 
     if (lowBattery) {
         // Trigger deepsleep without timeout to try avoiding depleting the battery
+        Watchdog.disable();
         shutdown();
     }
 
+    Watchdog.disable();
     sleep();
 }
