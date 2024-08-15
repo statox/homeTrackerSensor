@@ -14,6 +14,9 @@ typedef struct {
     int timeToSendMs;
     bool detectedLowBattery;
     bool detectedForcedReset;
+
+    bool detectedSensorFailure;
+    bool detectedInternalSensorFailure;
 } ApiData;
 
 void postSensorData(ApiData apiData);

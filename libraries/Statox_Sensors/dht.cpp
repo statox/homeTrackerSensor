@@ -31,14 +31,17 @@ float* readDHT() {
     // Read temperature as Celsius
     float t = dht.readTemperature();
 
-    float* result = new float[2];
-    result[0] = t;
-    result[1] = h;
+    float* result = new float[3];
+    result[1] = t;
+    result[2] = h;
 
     // Check if any reads failed and exit early (to try again).
     if (isnan(h) || isnan(t)) {
+        result[0] = 1;
         Serial.println("Failed to read from DHT sensor!");
+        return result;
     }
+    result[0] = 0;
 
     return result;
 }

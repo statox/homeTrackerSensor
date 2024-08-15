@@ -5,6 +5,7 @@ void postSensorData(ApiData apiData) {
     JsonDocument doc;
     doc["sensorName"] = apiData.sensorName;
 
+    doc["detectedSensorFailure"] = apiData.detectedSensorFailure;
     doc["tempCelsius"] = apiData.tempCelsius;
     doc["humidity"] = apiData.humidity;
 
@@ -13,6 +14,7 @@ void postSensorData(ApiData apiData) {
     #endif
 
     #ifdef HAS_INTERNAL_SENSOR
+    doc["detectedInternalSensorFailure"] = apiData.detectedInternalSensorFailure;
     doc["internalTempCelsius"] = apiData.internalTempCelsius;
     doc["internalHumidity"] = apiData.internalHumidity;
     #endif

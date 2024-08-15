@@ -28,7 +28,8 @@ bool initSHT31() {
 }
 
 float* readSHT31() {
-    float* result = new float[3];
+    float* result = new float[4];
+    result[0] = 1;
 
     if (!initSHT31()) {
         return result;
@@ -37,8 +38,9 @@ float* readSHT31() {
     float temperature = sht31.readTemperature();
     float humidity = sht31.readHumidity();
 
-    result[0] = temperature;
-    result[1] = humidity;
+    result[0] = 0;
+    result[1] = temperature;
+    result[2] = humidity;
 
     // TODO Check if it is interesting to enable the heater in winter
     // to evaporate condensation

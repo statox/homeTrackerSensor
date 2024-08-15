@@ -67,16 +67,26 @@ void loop() {
 
     blink(1, 500, 500);
 
-    apiData.tempCelsius = sensorReadings[0];
-    apiData.humidity = sensorReadings[1];
+    if (sensorReadings[0] == 0) {
+        apiData.tempCelsius = sensorReadings[1];
+        apiData.humidity = sensorReadings[2];
+    } else {
+        apiData.detectedSensorFailure = true;
+    }
 #ifdef MAIN_SENSOR_BME
-    apiData.pressurePa = sensorReadings[2];
+    if (sensorReadings[0] == 0) {
+        apiData.pressurePa = sensorReadings[3];
+    }
 #endif
 
 #ifdef HAS_INTERNAL_SENSOR
     float* internalSensorReadings = readDHT();
-    apiData.internalTempCelsius = internalSensorReadings[0];
-    apiData.internalHumidity = internalSensorReadings[1];
+    if (internalSensorReadings[0] == 0) {
+        apiData.internalTempCelsius = internalSensorReadings[1];
+        apiData.internalHumidity = internalSensorReadings[2];
+    } else {
+        apiData.detectedInternalSensorFailure = true;
+    }
     blink(1, 500, 500);
 #endif
 

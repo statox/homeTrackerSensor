@@ -27,11 +27,13 @@ bool initBME280() {
 }
 
 float* readBME280() {
-    float* result = new float[3];
+    float* result = new float[4];
+    result[0] = 1;
 
     if (!initBME280()) {
         return result;
     }
+    result[0] = 0;
 
     float temperature(NAN), humidity(NAN), pressure(NAN);
     BME280::TempUnit tempUnit(BME280::TempUnit_Celsius);
@@ -39,9 +41,9 @@ float* readBME280() {
 
     bme.read(pressure, temperature, humidity, tempUnit, presUnit);
 
-    result[0] = temperature;
-    result[1] = humidity;
-    result[2] = pressure;
+    result[1] = temperature;
+    result[2] = humidity;
+    result[3] = pressure;
 
     return result;
 }
