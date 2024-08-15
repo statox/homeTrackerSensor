@@ -9,15 +9,15 @@ void postSensorData(ApiData apiData) {
     doc["tempCelsius"] = apiData.tempCelsius;
     doc["humidity"] = apiData.humidity;
 
-    #ifdef MAIN_SENSOR_BME
+#ifdef MAIN_SENSOR_BME
     doc["pressurePa"] = apiData.pressurePa;
-    #endif
+#endif
 
-    #ifdef HAS_INTERNAL_SENSOR
+#ifdef HAS_INTERNAL_SENSOR
     doc["detectedInternalSensorFailure"] = apiData.detectedInternalSensorFailure;
     doc["internalTempCelsius"] = apiData.internalTempCelsius;
     doc["internalHumidity"] = apiData.internalHumidity;
-    #endif
+#endif
 
     doc["batteryCharge"] = apiData.batteryCharge;
     doc["batteryPercent"] = apiData.batteryPercent;

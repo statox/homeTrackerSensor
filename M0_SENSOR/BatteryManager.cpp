@@ -1,7 +1,7 @@
 #include "BatteryManager.h"
 #include <Arduino.h>
 
-BatteryManager::BatteryManager(int batteryPin): batteryPin(batteryPin) { }
+BatteryManager::BatteryManager(int batteryPin): batteryPin(batteryPin) {}
 
 void BatteryManager::initializeData() {
     batteryData.charge = 0.0;
@@ -9,10 +9,10 @@ void BatteryManager::initializeData() {
 }
 
 float mapFloat(float x, float in_min, float in_max, float out_min, float out_max) {
-  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-/* 
+/*
  *
  * This code is much easier for the M0 than for the Huzzah because the board already
  * packs a voltage divider to read the battery. See doc:

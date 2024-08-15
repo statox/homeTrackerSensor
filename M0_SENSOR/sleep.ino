@@ -1,10 +1,10 @@
-#include <WiFi101.h>
 #include <ArduinoLowPower.h>
+#include <WiFi101.h>
 
 const unsigned long oneSecond = 1e3;
 const unsigned long loopDelay = CONFIG_SLEEP_SECONDS * oneSecond;
 
-void sleep () {
+void sleep() {
     Serial.println();
     Serial.print("Going to sleep for (s) ");
     Serial.println(CONFIG_SLEEP_SECONDS);

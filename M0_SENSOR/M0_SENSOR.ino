@@ -1,18 +1,19 @@
-#include <Adafruit_SleepyDog.h>
-#include <ArduinoJson.h>
-#include "config.h"
 #include "BatteryManager.h"
 #include "Statox_Api.h"
 #include "Statox_Blink.h"
 #include "Statox_Sensors.h"
+#include "config.h"
+#include <Adafruit_SleepyDog.h>
+#include <ArduinoJson.h>
 
 BatteryManager batteryManager(A7);
 
-bool detectedForcedReset = false;;
+bool detectedForcedReset = false;
 
 void setup() {
     Serial.begin(9600);
-    while(!Serial && millis() < 1000) {}
+    while (!Serial && millis() < 1000) {
+    }
     batteryManager.initializeData();
 
     if (Watchdog.resetCause() == 32) {

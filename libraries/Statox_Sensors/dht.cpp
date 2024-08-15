@@ -12,15 +12,12 @@
 #include "DHT.h"
 #include "config.h"
 
-
 // TODO: Extract the define to main code
 
 // Initialize DHT sensor for normal 16mhz Arduino
 DHT dht(DHTPIN, DHTTYPE);
 
-void initDHT() {
-    dht.begin();
-}
+void initDHT() { dht.begin(); }
 
 float* readDHT() {
     initDHT();

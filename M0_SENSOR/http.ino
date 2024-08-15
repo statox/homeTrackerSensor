@@ -13,7 +13,7 @@ JsonDocument httpGETRequest(String url) {
     int httpResponseCode = http.responseStatusCode();
     JsonDocument response;
 
-    if (httpResponseCode<=0) {
+    if (httpResponseCode <= 0) {
         Serial.print("Error code: ");
         Serial.println(httpResponseCode);
 
@@ -48,7 +48,7 @@ void httpPOSTRequest(String url, JsonDocument payload) {
 
     int httpResponseCode = http.responseStatusCode();
 
-    if (httpResponseCode<=0) {
+    if (httpResponseCode <= 0) {
         Serial.print("Error code: ");
         Serial.println(httpResponseCode);
     }

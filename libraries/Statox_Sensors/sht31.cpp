@@ -1,10 +1,10 @@
-/*************************************************** 
+/***************************************************
   This is an example for the SHT31-D Humidity & Temp Sensor
 
   Designed specifically to work with the SHT31-D sensor from Adafruit
   ----> https://www.adafruit.com/products/2857
 
-  These sensors use I2C to communicate, 2 pins are required to  
+  These sensors use I2C to communicate, 2 pins are required to
   interface
  ****************************************************/
 
@@ -13,7 +13,7 @@
 Adafruit_SHT31 sht31 = Adafruit_SHT31();
 
 bool initSHT31() {
-    if (!sht31.begin(0x44)) {   // Set to 0x45 for alternate i2c addr
+    if (!sht31.begin(0x44)) { // Set to 0x45 for alternate i2c addr
         Serial.println("Couldn't find SHT31");
         return false;
     }

@@ -17,15 +17,13 @@ const int ON = LOW;
 const int OFF = HIGH;
 #endif
 
-void initBlink() {
-    pinMode(LED_PIN, OUTPUT);
-}
+void initBlink() { pinMode(LED_PIN, OUTPUT); }
 
 void blink(int times, int length, int interval) {
     Serial.println();
     Serial.print("Blink");
 
-    for (int i=0; i<times; i++) {
+    for (int i = 0; i < times; i++) {
         Serial.print(".");
         digitalWrite(LED_PIN, ON);
         delay(length);

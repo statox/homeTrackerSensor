@@ -13,5 +13,5 @@
 
 // Only one DHT sensor by board is supported
 // (which is fine I don't expect to have boards with 2 DHTs)
-#define DHTPIN A1 // Pin used to read the DHT sensor
+#define DHTPIN A1     // Pin used to read the DHT sensor
 #define DHTTYPE DHT11 // DHT11 or DHT22

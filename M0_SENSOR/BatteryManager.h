@@ -6,7 +6,7 @@ struct BatteryData {
 };
 
 class BatteryManager {
-public:
+  public:
     BatteryManager(int batteryPin);
 
     void initializeData();
@@ -15,6 +15,6 @@ public:
 
     BatteryData batteryData;
 
-private:
+  private:
     int batteryPin;
 };
