@@ -37,6 +37,8 @@ void loop() {
     // If one operation loops for too long the watchdog will trigger a reset of the board.
     // IMPORTANT: Make sure to disable the watchdog before sleep or shutdown otherwise it
     // will reset the board during the sleep
+    // IMPORTANT 2: When setting up a sensor for the first time it takes a bit longer
+    // to get an API address on the WiFi network so it can be useful to disable the watchdog
     int countdownMS = Watchdog.enable(10000);
 
     if (!initWifi()) {
