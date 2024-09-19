@@ -1,3 +1,4 @@
+#include "secrets.h"
 #include <ArduinoHttpClient.h>
 #include <WiFi101.h>
 
@@ -44,7 +45,16 @@ void httpPOSTRequest(String url, JsonDocument payload) {
     HttpClient http = HttpClient(client, CONFIG_API_HOSTNAME, 80);
 
     String contentType = "application/json";
-    http.post(url, contentType, payloadStr);
+
+    http.beginRequest();
+    http.post(url);
+    http.sendHeader("Content-Type", contentType);
+    http.sendHeader("Content-Length", payloadStr.length());
+    http.sendHeader("authorization", SECRET_API_AUTH_HEADER);
+    http.beginBody();
+    http.print(payloadStr);
+    http.endRequest();
+
 
     int httpResponseCode = http.responseStatusCode();
 
