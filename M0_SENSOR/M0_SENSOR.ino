@@ -12,8 +12,7 @@ bool detectedForcedReset = false;
 
 void setup() {
     Serial.begin(9600);
-    while (!Serial && millis() < 1000) {
-    }
+    while (!Serial && millis() < 1000) {}
     batteryManager.initializeData();
 
     if (Watchdog.resetCause() == 32) {
@@ -30,6 +29,12 @@ void loop() {
     Serial.println("===== Restart ======");
     Serial.println();
 
+    if (!initWifi()) {
+        Watchdog.disable(); // Is not useful since watchdog is not enabled yet
+        sleep();
+        return;
+    }
+
     // Watchdog provided by the SleepyDog library
     // Giving it 10 seconds setups a max time before reset of about 8s (not sure why)
     // which should be enough: A Loop lasts ~7 seconds and we reset the watchdog
@@ -38,20 +43,17 @@ void loop() {
     // IMPORTANT: Make sure to disable the watchdog before sleep or shutdown otherwise it
     // will reset the board during the sleep
     // IMPORTANT 2: When setting up a sensor for the first time it takes a bit longer
-    // to get an API address on the WiFi network so it can be useful to disable the watchdog
-    int countdownMS = Watchdog.enable(10000);
-
-    if (!initWifi()) {
-        Watchdog.disable();
-        sleep();
-        return;
-    }
-    Watchdog.reset();
+    // so we enable the watchdog _after_ connecting to WIFI.
+    //      TODO: Make sure the wifi connection doesn't hang and it's really ok to have
+    //            the watchdog starting here
+    Watchdog.enable(10000);
     blink(1, 500, 500);
 
     ApiData apiData = {};
     apiData.sensorName = CONFIG_SENSOR_NAME;
 
+    // This should probably happen before anything else so that we can shutdown the board
+    // when we have a really low battery
     batteryManager.updateData();
     bool lowBattery = batteryManager.mustShutdown();
     if (lowBattery) {
