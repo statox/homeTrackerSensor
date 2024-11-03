@@ -22,7 +22,7 @@ void setup() {
 
 void loop() {
     initBlink();
-    blink(10, 100, 100);
+    blink(5, 100, 100);
     Serial.println();
     Serial.println();
     Serial.println();
@@ -47,7 +47,7 @@ void loop() {
     //      TODO: Make sure the wifi connection doesn't hang and it's really ok to have
     //            the watchdog starting here
     Watchdog.enable(10000);
-    blink(1, 500, 500);
+    blink(1, 100, 100);
 
     ApiData apiData = {};
     apiData.sensorName = CONFIG_SENSOR_NAME;
@@ -60,7 +60,7 @@ void loop() {
         apiData.detectedLowBattery = lowBattery;
     }
     Watchdog.reset();
-    blink(1, 500, 500);
+    blink(1, 100, 100);
 
     apiData.batteryCharge = batteryManager.batteryData.charge;
     apiData.batteryPercent = batteryManager.batteryData.percent;
@@ -74,7 +74,7 @@ void loop() {
 #endif
 
     Watchdog.reset();
-    blink(1, 500, 500);
+    blink(1, 100, 100);
 
     if (sensorReadings[0] == 0) {
         apiData.tempCelsius = sensorReadings[1];
@@ -97,13 +97,13 @@ void loop() {
         apiData.detectedInternalSensorFailure = true;
     }
     Watchdog.reset();
-    blink(1, 500, 500);
+    blink(1, 100, 100);
 #endif
 
     apiData.detectedForcedReset = detectedForcedReset;
     postSensorData(apiData);
     Watchdog.reset();
-    blink(2, 100, 100);
+    blink(2, 50, 50);
 
     detectedForcedReset = false;
 
