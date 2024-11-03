@@ -29,7 +29,7 @@ boolean connectToSSID(const char* ssid, const char* password) {
     Serial.println();
     Serial.println("WiFi connected");
     Serial.print("IP address: ");
-    Serial.println(WiFi.localIP());
+    Serial.println((IPAddress)WiFi.localIP());
     Serial.println();
     return true;
 }
