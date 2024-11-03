@@ -29,12 +29,6 @@ void loop() {
     Serial.println("===== Restart ======");
     Serial.println();
 
-    if (!initWifi()) {
-        Watchdog.disable(); // Is not useful since watchdog is not enabled yet
-        sleep();
-        return;
-    }
-
     // Watchdog provided by the SleepyDog library
     // Giving it 10 seconds setups a max time before reset of about 8s (not sure why)
     // which should be enough: A Loop lasts ~7 seconds and we reset the watchdog
@@ -42,11 +36,28 @@ void loop() {
     // If one operation loops for too long the watchdog will trigger a reset of the board.
     // IMPORTANT: Make sure to disable the watchdog before sleep or shutdown otherwise it
     // will reset the board during the sleep
-    // IMPORTANT 2: When setting up a sensor for the first time it takes a bit longer
-    // so we enable the watchdog _after_ connecting to WIFI.
-    //      TODO: Make sure the wifi connection doesn't hang and it's really ok to have
-    //            the watchdog starting here
-    Watchdog.enable(10000);
+    // IMPORTANT 2: When setting up a sensor for the first time (or when the box restarts)
+    // the WiFi initialization takes a bit longer than 10 seconds.
+    //     - We tried enabling the watchdog after connecting to WiFi but the board sometimes
+    //       hands on WiFi connection even without the box restarting.
+    //     - The M0 doesn't have an EEPROM so we can't store data persistent between the reboots
+    //       So we can't disable the watchdog if we failed on WiFi several times
+    //     - The longest watchdog delay we manage to set on the M0 is ~16 seconds. For now
+    //       we try using this but it's likely too short to handle slow WiFi init.
+    //
+    // So for now I'm not sure how to solve the problem
+    // TODO Maybe The WiFi library can give a status of whether the connection happened before
+    // and if it didn't then we can try disabling the watchdog because we are in a first setup?
+    // Does that really works if the box restarts after a successful connection?
+    Watchdog.enable(16000);
+
+    if (!initWifi()) {
+        Watchdog.disable(); // Is not useful since watchdog is not enabled yet
+        sleep();
+        return;
+    }
+
+    Watchdog.reset();
     blink(1, 100, 100);
 
     ApiData apiData = {};
