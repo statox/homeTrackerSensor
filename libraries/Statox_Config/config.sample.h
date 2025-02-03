@@ -20,12 +20,11 @@
 // #define CONFIG_SENSOR_NAME "sdb"
 // #define MAIN_SENSOR_SHT
 // #define HAS_INTERNAL_SENSOR
-// #define DHTTYPE DHT22 // DHT11 or DHT22
+// #define DHTTYPE DHT22
 
 /* Chambre */
 // #define CONFIG_SENSOR_NAME "chambre"
 // #define MAIN_SENSOR_DHT
-// #define DHTTYPE DHT22 // DHT11 or DHT22
 
 /* Salon */
 // #define CONFIG_SENSOR_NAME "salon"
@@ -35,4 +34,4 @@
 // #define CONFIG_SENSOR_NAME "jardiniere"
 // #define MAIN_SENSOR_SHT
 // #define HAS_INTERNAL_SENSOR
-// #define DHTTYPE DHT11 // DHT11 or DHT22
+// #define DHTTYPE DHT11
