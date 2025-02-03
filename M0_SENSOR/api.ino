@@ -1,4 +1,4 @@
-void postSensorData(ApiData apiData) {
+JsonDocument postSensorData(ApiData apiData) {
     String path = "/homeTracker/upload";
     String url = "http://" + String(CONFIG_API_HOSTNAME) + path;
 
@@ -26,5 +26,5 @@ void postSensorData(ApiData apiData) {
     doc["detectedLowBattery"] = apiData.detectedLowBattery;
     doc["detectedForcedReset"] = apiData.detectedForcedReset;
 
-    httpPOSTRequest(url, doc);
+    return httpPOSTRequestWithResponseBody(url, doc);
 }

@@ -1,3 +1,5 @@
+#include <ArduinoJson.h>
+
 typedef struct {
     String sensorName;
 
@@ -19,4 +21,4 @@ typedef struct {
     bool detectedInternalSensorFailure;
 } ApiData;
 
-void postSensorData(ApiData apiData);
+JsonDocument postSensorData(ApiData apiData);

@@ -114,7 +114,8 @@ void loop() {
 #endif
 
     apiData.detectedForcedReset = detectedForcedReset;
-    postSensorData(apiData);
+    JsonDocument res = postSensorData(apiData);
+    int sleepTime = res["instructSleepSec"];
     Watchdog.reset();
     blink(2, 50, 50);
 
@@ -127,5 +128,5 @@ void loop() {
     }
 
     Watchdog.disable();
-    sleep();
+    sleep(sleepTime);
 }
