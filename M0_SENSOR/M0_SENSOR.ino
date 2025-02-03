@@ -27,6 +27,8 @@ void loop() {
     Serial.println();
     Serial.println();
     Serial.println("===== Restart ======");
+    Serial.print("sensor name:");
+    Serial.println(CONFIG_SENSOR_NAME);
     Serial.println();
 
     // Watchdog provided by the SleepyDog library
