@@ -6,17 +6,21 @@
 # ]
 # ///
 
+import configparser
 import requests
 import serial
 import time
 
+config = configparser.ConfigParser()
+config.read("config.ini")
+
 # Configuration
-com_port = "/dev/ttyACM0"  # Adjust this to your COM port
+COM_PORT = config["usb"]["com_port"]
 baud_rate = 115200
 io_delay = 5
 
-API_HOST = "http://api.statox.fr/homeTracker/upload"
-API_KEY = "CHANGEME"
+API_HOST = config["api"]["host"]
+API_KEY = config["api"]["key"]
 
 
 def read_sensor_data(ser):
@@ -38,7 +42,7 @@ def send_data_to_api(temp: float, humidity: float):
 
 
 def main():
-    with serial.Serial(com_port, baud_rate, timeout=1) as ser:
+    with serial.Serial(COM_PORT, baud_rate, timeout=1) as ser:
         while True:
             temp, humidity = read_sensor_data(ser)
             print(f"Read, {temp}*C {humidity}%")
