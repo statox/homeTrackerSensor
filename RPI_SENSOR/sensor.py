@@ -7,6 +7,7 @@
 # ///
 
 import configparser
+import datetime
 import requests
 import serial
 import time
@@ -44,6 +45,7 @@ def send_data_to_api(temp: float, humidity: float):
 def main():
     with serial.Serial(COM_PORT, baud_rate, timeout=1) as ser:
         while True:
+            print("== ", datetime.datetime.now())
             temp, humidity = read_sensor_data(ser)
             print(f"Read, {temp}*C {humidity}%")
             send_data_to_api(temp, humidity)
