@@ -23,6 +23,8 @@ io_delay = 5
 API_HOST = config["api"]["host"]
 API_KEY = config["api"]["key"]
 
+SENSOR_NAME = config["sensor"]["name"]
+
 
 def read_sensor_data(ser):
     try:
@@ -36,7 +38,7 @@ def read_sensor_data(ser):
 
 
 def send_data_to_api(temp: float, humidity: float):
-    body = {"sensorName": "colonne", "tempCelsius": temp, "humidity": humidity}
+    body = {"sensorName": SENSOR_NAME, "tempCelsius": temp, "humidity": humidity}
     headers = {"authorization": f"Bearer {API_KEY}"}
     x = requests.post(API_HOST, json=body, headers=headers)
     print("Response:", x.text)
