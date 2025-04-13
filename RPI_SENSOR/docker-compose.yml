@@ -1,0 +1,9 @@
+services:
+  sensor:
+    container_name: sensor
+    build: .
+    volumes:
+      - ./config.ini:/app/config.ini
+    restart: unless-stopped
+    devices:
+      - /dev/ttyACM0:/dev/ttyACM0

@@ -1,15 +1,20 @@
 # SHT41 Trinkey + Rpi
 
-WORK IN PROGRESS.
+This is project is about leveraging a [SHT4X trinkey by Adafruit](https://learn.adafruit.com/adafruit-sht4x-trinkey) to report temperature and humidity using a raspberry instead of a microcontroller like with the [`M0_SENSOR`](../M0_SENSOR) directory
 
-This is project is about leveraging a [SHT4X trinkey by Adafruit](https://learn.adafruit.com/adafruit-sht4x-trinkey) to report temperature and humidity.
+Two parts are needed:
 
-The idea is to have
+- The SHT41 trinkey, running the original program shipped by Adafruit. This program writes on the serial port an id, the temperature, humidity, and value of the capacitive sensor.
+- The raspberry running the python script which reads the data from USB and send it to the API.
 
-- The default program running on the Trinkey which writes on the serial port an id, the temperature, humidity and value of the capacitive sensor.
-- The python script running on the rpi which regularly reads from the serial port and calls my API to report the read values.
+## SHT41 Trinkey
 
-Lots of to dos:
+TODO: Version the program in this repo and add process to upload the progam to the key. This is not something I have had the need to do yet as I'm using the factory program.
 
-- Add the Trinkey program to this repo, maybe rework it to only output necessary data.
-- Better package the python script. For now it is copied on the rpi and running in a `screen` session started with `uv run sensor.py` we can do better.
+## Raspberry
+
+- Clone this repo to the raspberry and navigate to the [`RPI_SENSOR`](./.) directory
+- Edit the [`config.ini`](./config.ini) file to change the sensor name and setup the API key
+- Run `sudo docker compose up -d --build`
+
+The docker container is based on an image providing `uv` to run the script
