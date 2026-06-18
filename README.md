@@ -4,7 +4,7 @@ This repository contains the Arduino code for environmental sensors I'm developi
 
 I have discussed this project on my blog at [statox.fr](https://www.statox.fr/posts/2024/06/environment_sensors/).
 
-# Software architecture and setup
+# Software architecture
 
 - ~~The [ATWINC1500](https://github.com/statox/homeTrackerSensor/tree/f09cc6b5924b6409a57263a870297b3a715aa7ad/ATWINC1500) directory contains code for uploading to [Adafruit Feather M0 WiFi](https://www.adafruit.com/product/3010) boards~~
 - ~~The [ESP8266](https://github.com/statox/homeTrackerSensor/tree/f09cc6b5924b6409a57263a870297b3a715aa7ad/ESP8266) directory contains code for uploading to [Adafruit Feather Huzzah](https://www.adafruit.com/product/2821) boards~~
@@ -18,6 +18,11 @@ The project now uses only [Adafruit Feather M0 WiFi](https://www.adafruit.com/pr
     - [Statox_Sensors](./libraries/Statox_Sensors) is my collection of wrappers around other libraries for reading various sensors ([BME280](https://whadda.com/product/bme280-temperature-humidity-and-pressure-sensor-wpse335/), [DHT11/22](https://learn.adafruit.com/dht), [SHT30](https://www.adafruit.com/product/5064), [NTC-MF52 thermistors](https://www.velleman.eu/products/view/?id=435554))
     - [Statox_Config](./libraries/Statox_Config) contains configuration header files for the sensors I'm creating. (e.g. WiFi SSID and passwords) (Only `*.sample.h` files are versioned they must be copied to their equivalent without `.sample` in their name)
     - The other directories are libraries installed via Arduino IDE. (TODO Find a better way to manage that?) I am not the author of these libraries their individual licenses should be respected.
+
+# Setup
+
+> [!TIP]
+> Check docs/build-and-upload.md for a setup without Arduino IDE
 
 The project is designed to be opened by Arduino IDE 2.x as a "Sketchbook"
 
